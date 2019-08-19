@@ -16,4 +16,19 @@ module Ghtk
     @config
   end
 
+  def self.is_blank?(object)
+    case object
+    when NilClass, FalseClass
+      return true
+    when TrueClass, Numeric, Fixnum
+      return false
+    when Array, Hash
+      return object.empty?
+    when String
+      return object.empty? || !object.match(/\A[[:space:]]*\z/).nil?
+    else
+      return object.respond_to?(:empty?) ? !!object.empty? : !object
+    end
+  end
+
 end

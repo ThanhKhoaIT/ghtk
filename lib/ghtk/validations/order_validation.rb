@@ -5,22 +5,22 @@ module Ghtk::Validations
       @serializer = serializer
     end
 
-    def valid!
+    def validate!
       blank_params = []
       serializer_attributes = serializer.attributes
       REQUIRED_PARAMS.each do |key, sub_keys|
         sub_keys.each do |sub_key|
-          blank_params << "#{key}.#{sub_key}" if serializer_attributes.dig(key, sub_key).blank?
+          blank_params << "#{key}.#{sub_key}" if Ghtk.is_blank?(serializer_attributes.dig(key, sub_key))
         end
       end
       unless serializer_attributes.dig(:order, :use_return_address).to_i.zero?
         REQUIRED_RETURN_PARAMS.each do |key, sub_keys|
           sub_keys.each do |sub_key|
-            blank_params << "#{key}.#{sub_key}" if serializer_attributes.dig(key, sub_key).blank?
+            blank_params << "#{key}.#{sub_key}" if Ghtk.is_blank?(serializer_attributes.dig(key, sub_key))
           end
         end
       end
-      raise Ghtk::BadParamsError.new("Params: #{blank_params.join(', ')} is blank!") if blank_params.any?
+      raise Ghtk::BadParamsError.new("Params: #{blank_params.join(', ')} is blank!") unless blank_params.empty?
       return true
     end
 

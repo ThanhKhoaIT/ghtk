@@ -5,10 +5,10 @@ module Ghtk::Validations
       @serializer = serializer
     end
 
-    def valid!
+    def validate!
       serializer_attributes = serializer.attributes
-      blank_params = REQUIRED_PARAMS.select { |key| serializer_attributes[key].blank? }
-      raise Ghtk::BadParamsError.new("Params: #{blank_params.join(', ')} is blank!") if blank_params.any?
+      blank_params = REQUIRED_PARAMS.select { |key| Ghtk.is_blank?(serializer_attributes[key]) }
+      raise Ghtk::BadParamsError.new("Params: #{blank_params.join(', ')} is blank!") unless blank_params.empty?
       return true
     end
 
