@@ -18,7 +18,7 @@ Or install it yourself as:
     $ gem install ghtk
 
 ## Setup for Rails
-Add `config/ghtk.rb` file
+Add `config/initializers/ghtk.rb` file
 ```ruby
   Ghtk.setup do |config|
     config.domain = '' # Add domain for sandbox or production
