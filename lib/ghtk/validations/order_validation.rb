@@ -1,22 +1,21 @@
 module Ghtk::Validations
   class OrderValidation
 
-    def initialize(serializer)
-      @serializer = serializer
+    def initialize(hash)
+      @hash = hash
     end
 
     def validate!
       blank_params = []
-      serializer_attributes = serializer.attributes
       REQUIRED_PARAMS.each do |key, sub_keys|
         sub_keys.each do |sub_key|
-          blank_params << "#{key}.#{sub_key}" if Ghtk.is_blank?(serializer_attributes.dig(key, sub_key))
+          blank_params << "#{key}.#{sub_key}" if Ghtk.is_blank?(hash.dig(key, sub_key))
         end
       end
-      unless serializer_attributes.dig(:order, :use_return_address).to_i.zero?
+      unless hash.dig(:order, :use_return_address).to_i.zero?
         REQUIRED_RETURN_PARAMS.each do |key, sub_keys|
           sub_keys.each do |sub_key|
-            blank_params << "#{key}.#{sub_key}" if Ghtk.is_blank?(serializer_attributes.dig(key, sub_key))
+            blank_params << "#{key}.#{sub_key}" if Ghtk.is_blank?(hash.dig(key, sub_key))
           end
         end
       end
@@ -26,7 +25,7 @@ module Ghtk::Validations
 
     private
 
-    attr_reader :serializer
+    attr_reader :hash
 
     REQUIRED_PARAMS = { order: [
       :id,

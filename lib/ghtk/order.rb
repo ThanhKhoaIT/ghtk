@@ -2,10 +2,11 @@ module Ghtk
   class Order
 
     def self.create(serializer)
-      Ghtk::Validations::OrderValidation.new(serializer).validate!
-      Ghtk::Request.post('/services/shipment/order', serializer.attributes)
+      create_data = NinjaVan::FlexibleParams.new(serializer).hash
+      Ghtk::Validations::OrderValidation.new(create_data).validate!
+      Ghtk::Request.post('/services/shipment/order', create_data)
     rescue Ghtk::ForbiddenError
-      raise Ghtk::CreateOrderError.new(serializer.attributes)
+      raise Ghtk::CreateOrderError.new(create_data)
     end
 
     def self.get_detail(tracking_code)

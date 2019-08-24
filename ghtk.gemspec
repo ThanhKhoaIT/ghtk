@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{GHTK API Caller}
   spec.description   = %q{Ruby gem for call GHTK API}
-  spec.homepage      = "https://github.com/lixibox/ghtk"
+  spec.homepage      = "https://github.com/ThanhKhoaIT/ghtk"
   spec.license       = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
