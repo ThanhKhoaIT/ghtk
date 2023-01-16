@@ -1,4 +1,3 @@
-require "http"
 require "ghtk/support/hash"
 require "ghtk/version"
 require "ghtk/error"

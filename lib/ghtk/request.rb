@@ -1,9 +1,11 @@
+require "http"
+
 module Ghtk
   class Request
 
     def self.post(endpoint, params={})
       full_endpoint = "#{Ghtk.setup.domain}#{endpoint}?ver=#{Ghtk.setup.version}"
-      response = Http.headers(
+      response = HTTP.headers(
         content_type: 'application/json',
         token: Ghtk.setup.access_token,
       ).post(full_endpoint, json: params)
@@ -15,7 +17,7 @@ module Ghtk
 
     def self.get(endpoint, params={})
       full_endpoint = "#{Ghtk.setup.domain}#{endpoint}?ver=#{Ghtk.setup.version}"
-      response = Http.headers(
+      response = HTTP.headers(
         content_type: 'aplication/json',
         token: Ghtk.setup.access_token,
       ).get(full_endpoint, params: params)
