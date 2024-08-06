@@ -2,7 +2,7 @@ module Ghtk
   class Order
 
     def self.create(serializer)
-      create_data = NinjaVan::FlexibleParams.new(serializer).hash
+      create_data = Ghtk::FlexibleParams.new(serializer).hash
       Ghtk::Validations::OrderValidation.new(create_data).validate!
       Ghtk::Request.post('/services/shipment/order', create_data)
     rescue Ghtk::RequestError => e
